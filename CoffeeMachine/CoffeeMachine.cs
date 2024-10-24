@@ -11,10 +11,13 @@ namespace CoffeeMachineLibrary
         private Container _waterContainer;
         private Container _milkContainer;
         private Container _beansContainer;
-            
 
-        public CoffeeMachine() {
-            _recipes[RecipeNames.Cappuccino] = new Recipe(3, 6, 5);
+
+        public CoffeeMachine()
+        {
+            _recipes = new Dictionary<RecipeNames, Recipe>();
+
+            _recipes[RecipeNames.Cappuccino] = new Recipe(3, 8, 5);
             _recipes[RecipeNames.Filtered] = new Recipe(1, 1, 7);
             _recipes[RecipeNames.Espresso] = new Recipe(0, 2, 9);
             _beansContainer = new Container(100);
@@ -42,7 +45,8 @@ namespace CoffeeMachineLibrary
         public int LoadWater(int value)
         {
             return _waterContainer.LoadResourse(value);
-        }public int LoadMilk(int value)
+        }
+        public int LoadMilk(int value)
         {
             return _milkContainer.LoadResourse(value);
         }public int LoadBeans(int value)
