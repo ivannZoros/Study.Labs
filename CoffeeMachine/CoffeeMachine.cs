@@ -15,14 +15,20 @@ namespace CoffeeMachineLibrary
 
         public CoffeeMachine()
         {
-            _recipes = new Dictionary<RecipeNames, Recipe>();
+            _recipes = new Dictionary<RecipeNames, Recipe>
+            {
+                [RecipeNames.Cappuccino] = new Recipe(8, 8, 8),
+                [RecipeNames.Filtered] = new Recipe(1, 1, 7),
+                [RecipeNames.Espresso] = new Recipe(0, 2, 9)
+            };
 
-            _recipes[RecipeNames.Cappuccino] = new Recipe(3, 8, 5);
-            _recipes[RecipeNames.Filtered] = new Recipe(1, 1, 7);
-            _recipes[RecipeNames.Espresso] = new Recipe(0, 2, 9);
+
             _beansContainer = new Container(100);
             _waterContainer = new Container(500);
             _milkContainer = new Container(200);
+
+            _grinderUnit = new GrinderUnit();
+            _brewingUnit = new BrewingUnit();
         }
         public Coffee Brew(RecipeNames recipeName)
         {
@@ -34,9 +40,9 @@ namespace CoffeeMachineLibrary
             {
                 throw new ArgumentException("Недостаточно ингредиентов");
             }
-            _waterContainer.GetResourse(recipe.Water);
-            _milkContainer.GetResourse(recipe.Milk);
-            _beansContainer.GetResourse(recipe.Beans);
+            _waterContainer.GetResource(recipe.Water);
+            _milkContainer.GetResource(recipe.Milk);
+            _beansContainer.GetResource(recipe.Beans);
 
             GroundCoffee groundCoffee = _grinderUnit.Grind(recipe.Beans);
             return _brewingUnit.Brew(groundCoffee,recipeName); 
@@ -44,27 +50,27 @@ namespace CoffeeMachineLibrary
 
         public int LoadWater(int value)
         {
-            return _waterContainer.LoadResourse(value);
+            return _waterContainer.LoadResource(value);
         }
         public int LoadMilk(int value)
         {
-            return _milkContainer.LoadResourse(value);
+            return _milkContainer.LoadResource(value);
         }public int LoadBeans(int value)
         {
-            return _beansContainer.LoadResourse(value);
+            return _beansContainer.LoadResource(value);
         }
 
         public int GetWaterLevel()
         {
-            return _waterContainer.GetValue;
+            return _waterContainer.GetValue();
         }
         public int GetMilkLevel()
         {
-            return _milkContainer.GetValue;
+            return _milkContainer.GetValue();
         }
         public int GetBeansLevel() 
         {
-            return _beansContainer.GetValue;
+            return _beansContainer.GetValue();
         }
     }
 }
