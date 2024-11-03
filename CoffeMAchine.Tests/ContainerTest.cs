@@ -32,14 +32,14 @@ namespace CoffeMachine.Tests
         public void LoadResource_Success()
         {
             // Arrange
-            const int expectedCapacity = 1000;
-            var container = new Container(expectedCapacity);
-            const int loadValue = 500;
+            const int ñapacity = 100;
+            var container = new Container(ñapacity);
+            const int loadValue = 50;
             // Act
-            container.LoadResourse(loadValue);
-            var actualCapacity = container.GetCapacity;
+            container.LoadResource(loadValue);
+            var actualValue = container.GetValue();
             // Assert
-            Assert.Equal(loadValue, actualCapacity);
+            Assert.Equal(loadValue, actualValue);
         }
         [Theory]
         [InlineData(-1)]
@@ -49,20 +49,22 @@ namespace CoffeMachine.Tests
             //Arrange 
             var container = new Container(1000);    
             //Act + Assert
-            Assert.Throws<ArgumentException>(() => container.LoadResourse(loadValue));
+            Assert.Throws<ArgumentException>(() => container.LoadResource(loadValue));
         }
         [Fact]
-        public void GetResoure_Success()
+        public void GetResourñe_Success()
         {
             // Arrange
             const int expectedCapacity = 1000;
             var container = new Container(expectedCapacity);
-            const int getValue = 500;
+            const int initialValue = 500;
+            container.LoadResource(initialValue);
+            const int getValue = 200;
             // Act
-            container.LoadResourse(getValue);
-            var actualCapacity = container.GetCapacity;
+            container.GetResource(getValue);
+            var actualValue = container.GetValue();
             // Assert
-            Assert.Equal(getValue, actualCapacity);
+            Assert.Equal(initialValue-getValue, actualValue);
         }
         [Theory]
         [InlineData(-1)]
@@ -72,7 +74,7 @@ namespace CoffeMachine.Tests
             //Arrange 
             var container = new Container(1000);
             //Act + Assert
-            Assert.Throws<ArgumentException>(() => container.GetResourse(getValue));
+            Assert.Throws<ArgumentException>(() => container.GetResource(getValue));
         }
     }
 
