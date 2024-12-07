@@ -1,0 +1,80 @@
+[
+  {
+    "Title": "To Kill a Mockingbird",
+    "Author": "Harper Lee",
+    "Isbn": "978-0-446-31078-9",
+    "PublicationYear": 1960
+  },
+  {
+    "Title": "The Great Gatsby",
+    "Author": "F. Scott Fitzgerald",
+    "Isbn": "978-0-7434-7225-3",
+    "PublicationYear": 1925
+  },
+  {
+    "Title": "1984",
+    "Author": "George Orwell",
+    "Isbn": "978-0-451-52493-5",
+    "PublicationYear": 1949
+  },
+  {
+    "Title": "War and Peace",
+    "Author": "Leo Tolstoy",
+    "Isbn": "978-0-679-72826-5",
+    "PublicationYear": 1869
+  },
+  {
+    "Title": "War and Peace",
+    "Author": "Leo Tolstoy",
+    "Isbn": "978-0-14-144460-8",
+    "PublicationYear": 1869
+  },
+  {
+    "Title": "War and Peace",
+    "Author": "Leo Tolstoy",
+    "Isbn": "978-1-85326-008-0",
+    "PublicationYear": 1869
+  },
+  {
+    "Title": "Anna Karenina",
+    "Author": "Leo Tolstoy",
+    "Isbn": "978-0-14-144164-5",
+    "PublicationYear": 1877
+  },
+  {
+    "Title": "Anna Karenina",
+    "Author": "Leo Tolstoy",
+    "Isbn": "978-0-486-43796-8",
+    "PublicationYear": 1877
+  },
+  {
+    "Title": "Crime and Punishment",
+    "Author": "Fyodor Dostoevsky",
+    "Isbn": "978-0-14-144462-2",
+    "PublicationYear": 1866
+  },
+  {
+    "Title": "Crime and Punishment",
+    "Author": "Fyodor Dostoevsky",
+    "Isbn": "978-1-85326-022-6",
+    "PublicationYear": 1866
+  },
+  {
+    "Title": "The Brothers Karamazov",
+    "Author": "Fyodor Dostoevsky",
+    "Isbn": "978-0-14-144402-8",
+    "PublicationYear": 1880
+  },
+  {
+    "Title": "The Master and Margarita",
+    "Author": "Mikhail Bulgakov",
+    "Isbn": "978-0-14-118080-9",
+    "PublicationYear": 1967
+  },
+  {
+    "Title": "The Master and Margarita",
+    "Author": "Mikhail Bulgakov",
+    "Isbn": "978-1-56886-080-6",
+    "PublicationYear": 1967
+  }
+]
