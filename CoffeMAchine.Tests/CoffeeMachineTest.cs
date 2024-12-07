@@ -1,8 +1,5 @@
 ﻿using Xunit;
-using CoffeeMachineLibrary;
-using System.ComponentModel;
 using System;
-using Newtonsoft.Json.Bson;
 
 namespace CoffeeMachineLibrary.Tests
 {

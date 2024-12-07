@@ -1,6 +1,5 @@
 using Xunit;
 using CoffeeMachineLibrary;
-using System.ComponentModel;
 using System;
 namespace CoffeMachineLibrary.Tests
 {
