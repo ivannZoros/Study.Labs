@@ -1,7 +1,7 @@
 ﻿using Xunit;
 using CoffeeMachineLibrary;
 
-namespace Grinder.Tests
+namespace CoffeMachineLibrary.Tests
 {
     public class GrinderTest
     {

@@ -1,80 +1,104 @@
-using System;
 using Xunit;
 using CoffeeMachineLibrary;
-
-namespace CoffeMachine.Tests
+using System.ComponentModel;
+using System;
+namespace CoffeMachineLibrary.Tests
 {
-    public class ContainerTest
+    public class CoffeeMachineTest
     {
         [Fact]
-        public void ContainerCapacitySet_Success()
+        public void LoadMilk_Success()
         {
             //Arrange
-            const int expectedCapacity = 1000;
-            var container = new Container(expectedCapacity);
+            int expectedMilk = 50;
             //Act
-            var actualCapacity = container.Capacity;
+            var loadMilk = new CoffeeMachine().LoadMilk(expectedMilk);
             //Assert
-            Assert.Equal(expectedCapacity, actualCapacity);
-
-        }
-
-        [Theory]
-        [InlineData(-1)]
-        [InlineData(3001)]
-        public void ContainerInvalidCapacity_ThrowsException(int capacity)
-        {
-            //Act + Assert
-            Assert.Throws<ArgumentException>(() => new Container(capacity));
-
+            Assert.Equal(expectedMilk, loadMilk);
         }
         [Fact]
-        public void LoadResource_Success()
+        public void LoadMilk_MoreThanPossible()
         {
-            // Arrange
-            const int ñapacity = 100;
-            var container = new Container(ñapacity);
-            const int loadValue = 50;
-            // Act
-            container.LoadResource(loadValue);
-            var actualValue = container.GetValue();
-            // Assert
-            Assert.Equal(loadValue, actualValue);
-        }
-        [Theory]
-        [InlineData(-1)]
-        [InlineData(1001)]
-        public void LoadResourseInvalidValue_ThrowException(int loadValue)
-        {
-            //Arrange 
-            var container = new Container(1000);    
+            //Arrange
+            var coffeeMachine = new CoffeeMachine();
             //Act + Assert
-            Assert.Throws<ArgumentException>(() => container.LoadResource(loadValue));
+            Assert.Throws<ArgumentException>(() => coffeeMachine.LoadMilk(201));
         }
         [Fact]
-        public void GetResourñe_Success()
+        public void LoadWater_Success()
         {
-            // Arrange
-            const int expectedCapacity = 1000;
-            var container = new Container(expectedCapacity);
-            const int initialValue = 500;
-            container.LoadResource(initialValue);
-            const int getValue = 200;
-            // Act
-            container.GetResource(getValue);
-            var actualValue = container.GetValue();
-            // Assert
-            Assert.Equal(initialValue-getValue, actualValue);
+            //Arrange
+            int expectedWater = 8;
+            //Act
+            var loadWater = new CoffeeMachine().LoadWater(expectedWater);
+            //Assert
+            Assert.Equal(expectedWater, loadWater);
         }
-        [Theory]
-        [InlineData(-1)]
-        [InlineData(1001)]
-        public void GetResourseInvalidValue_ThrowException(int getValue)
+        [Fact]
+        public void LoadWater_MoreThanPossible()
         {
-            //Arrange 
-            var container = new Container(1000);
+            //Arrange
+            var coffeeMachine = new CoffeeMachine();
             //Act + Assert
-            Assert.Throws<ArgumentException>(() => container.GetResource(getValue));
+            Assert.Throws<ArgumentException>(() => coffeeMachine.LoadWater(501));
+        }
+
+        [Fact]
+        public void LoadBeans_Success()
+        {
+            //Arrange
+            int expectedBeans = 8;
+            //Act
+            var loadBeans = new CoffeeMachine().LoadBeans(expectedBeans);
+            //Assert
+            Assert.Equal(expectedBeans, loadBeans);
+        }
+        [Fact]
+        public void LoadBeans_MoreThanPossible()
+        {
+            //Arrange
+            var coffeeMachine = new CoffeeMachine();
+            //Act + Assert
+            Assert.Throws<ArgumentException>(() => coffeeMachine.LoadBeans(101));
+        }
+        [Fact]
+        public void GetMilkLevel_Success()
+        {
+            //Arrange
+            var coffeeMachine = new CoffeeMachine();
+            int initialMilk = coffeeMachine.GetMilkLevel();
+            int addedMilk = 100;
+            coffeeMachine.LoadMilk(addedMilk);
+            //Act
+            int actualMilk = coffeeMachine.GetMilkLevel();
+            //Assert
+            Assert.Equal(initialMilk + addedMilk, actualMilk);
+        }
+        [Fact]
+        public void GetWaterLevel_Success()
+        {
+            //Arrange
+            var coffeeMachine = new CoffeeMachine();
+            int initialWater = coffeeMachine.GetWaterLevel();
+            int addedWater = 100;
+            coffeeMachine.LoadWater(addedWater);
+            //Act
+            int actualWater = coffeeMachine.GetWaterLevel();
+            //Assert
+            Assert.Equal(initialWater + addedWater, actualWater);
+        }
+        [Fact]
+        public void GetBeansLevel_Success()
+        {
+            //Arrange
+            var coffeeMachine = new CoffeeMachine();
+            int initialBeans = coffeeMachine.GetBeansLevel();
+            int addedBeans = 100;
+            coffeeMachine.LoadBeans(addedBeans);
+            //Act
+            int actualBeans = coffeeMachine.GetBeansLevel();
+            //Assert
+            Assert.Equal(initialBeans + addedBeans, actualBeans);
         }
     }
 

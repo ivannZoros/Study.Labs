@@ -1,15 +1,17 @@
 ﻿using CoffeeMachineLibrary;
 using Xunit;
 
-namespace CoffeMachine.Tests
+namespace CoffeMachineLibrary.Tests
 {
     public class GroundCoffeeTest
     {
         [Fact]
         public void GroundCoffee_Success()
         {
-            //Arrange + Act
+            //Arrange
             const int expectedGround = 4;
+
+            //Act
             var ground = new GroundCoffee(expectedGround);
 
             //Assert

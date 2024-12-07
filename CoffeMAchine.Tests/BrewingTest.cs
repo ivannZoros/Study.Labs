@@ -1,7 +1,7 @@
 ﻿using Xunit;
 using CoffeeMachineLibrary;
 
-namespace CoffeMachine.Tests
+namespace CoffeMachineLibrary.Tests
 {
     public class BrewingTest
     {
