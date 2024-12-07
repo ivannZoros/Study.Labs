@@ -7,12 +7,12 @@ namespace LibraryManagement
     public class BookRepository
     {
 
-        private readonly string _booksFilePath;
+        private readonly IFileSystemClient _fileSystemClient;
         private List<Book> _books = new List<Book>();
         private bool _isBookLoaded = false;
-        public BookRepository(string filePath) 
+        public BookRepository(string filePath, IFileSystemClient storage) 
         {
-            _booksFilePath = filePath;
+            _fileSystemClient = storage;
             LoadBooks();
         }
  //LAZY<> тип для ленивой загрузки  
@@ -20,7 +20,8 @@ namespace LibraryManagement
         private void LoadBooks()
         {
             if(_isBookLoaded == false) { 
-                if (File.Exists(_booksFilePath))
+                //if (File.Exists(_booksFilePath))
+                if (_fileSystemClient.Exists(_booksFilePath))
                 {
                     var jsonString = File.ReadAllText(_booksFilePath);
                     _books = JsonSerializer.Deserialize<List<Book>>(jsonString);
