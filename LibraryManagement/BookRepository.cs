@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
+﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 
 
@@ -11,37 +7,34 @@ namespace LibraryManagement
     public class BookRepository
     {
 
-        private readonly string _booksFilePath = "C:\\Users\\Елена Елисеева\\Downloads\\Study.Labs\\Study.Labs\\LibraryManagement\\books.json";
+        private readonly string _booksFilePath;
         private List<Book> _books = new List<Book>();
+        private bool _isBookLoaded = false;
         public BookRepository(string filePath) 
         {
             _booksFilePath = filePath;
-            LoadBooks(_booksFilePath);
+            LoadBooks();
         }
- 
-        private void LoadBooks(string filePath)
+ //LAZY<> тип для ленивой загрузки  
+ //MOQ - библиотека для создания заглушен при тестировании .Сделать абстракцию от файловой системы
+        private void LoadBooks()
         {
-            try
-            {
-                if (File.Exists(filePath))
+            if(_isBookLoaded == false) { 
+                if (File.Exists(_booksFilePath))
                 {
-                    var jsonString = File.ReadAllText(filePath);
+                    var jsonString = File.ReadAllText(_booksFilePath);
                     _books = JsonSerializer.Deserialize<List<Book>>(jsonString);
                 }
                 else
                 {
                     _books = new List<Book>();
                 }
-            } catch (Exception ex) {
-                Console.Write($"Ошибка чтения файла: {ex.Message}");
-                _books = new List<Book>();
+                _isBookLoaded = true;
             }
-
         }
         private void SaveBooks()
         {
-            try
-            {
+
                 var options = new JsonSerializerOptions
                 {
                     WriteIndented = true,
@@ -50,15 +43,10 @@ namespace LibraryManagement
 
                 var jsonString = JsonSerializer.Serialize(_books, options);
                 File.WriteAllText(_booksFilePath, jsonString);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Ошибка записи файла: {ex.Message}");
-            }
+ 
         }
         public List<Book> SearchBooks(string searchId, SearchCriteria criteria)
         {
-            LoadBooks(_booksFilePath);
             List<Book> results = new List<Book>();
             switch (criteria)
             {
@@ -87,21 +75,18 @@ namespace LibraryManagement
         }
         public void AddBook(Book book)
         {
-            LoadBooks(_booksFilePath);
             _books.Add(book);
             SaveBooks();
         }
 
         public List<Book> GetAllBooks()
         {
-            LoadBooks(_booksFilePath);
             return _books;
         }
 
 
         public void RemoveBook(Book book)
         {
-
             _books.Remove(book);
             SaveBooks();
         }

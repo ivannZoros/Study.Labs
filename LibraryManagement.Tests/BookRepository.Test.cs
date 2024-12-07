@@ -1,7 +1,3 @@
-using Xunit;
-using LibraryManagement;
-using System.Runtime.InteropServices;
-
 namespace LibraryManagement.Tests
 {
     public class BookRepositoryTests
@@ -59,7 +55,7 @@ namespace LibraryManagement.Tests
                 PublicationYear = 1
             };
             var expectedCount = _repository.GetAllBooks().Count;
-
+            //Проверить количество книг без добавления новых после удаления
 
             _repository.AddBook(book);
             _repository.RemoveBook(book);
