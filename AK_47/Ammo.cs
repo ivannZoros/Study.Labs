@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AK_47
+﻿namespace AK_47
 {
     public class Ammo
     {
@@ -17,6 +11,5 @@ namespace AK_47
             }
             isUsed = true;
         }
-        
     }
 }

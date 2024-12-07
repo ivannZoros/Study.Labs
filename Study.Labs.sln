@@ -27,7 +27,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibraryManagement.Tests", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibraryManagement.UI", "UI\LibraryManagement.UI.csproj", "{41606D00-69E0-41EF-BF7C-6D4C15C4CE51}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Study.Labs06", "Study.Labs06", "{3C601546-1E83-4D21-BD31-E10BC3B8A901}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Study.Labs.Lab06", "Study.Labs.Lab06", "{3C601546-1E83-4D21-BD31-E10BC3B8A901}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoffeMachine.Tests", "CoffeMAchine.Tests\CoffeMachine.Tests.csproj", "{F21B9D38-3D00-4470-9B8D-A0C6B790853F}"
 EndProject

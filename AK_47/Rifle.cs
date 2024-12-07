@@ -53,8 +53,5 @@
         public int ShotsFired { get { return _shotsFired; } }
 
 
-
-
-
     }
 }

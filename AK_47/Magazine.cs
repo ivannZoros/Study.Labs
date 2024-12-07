@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AK_47
+﻿namespace AK_47
 {
     public class Magazine
     {
         private int _capacity;
         private List<Ammo> ammos = new();
 
-        public int GetCapacity() => _capacity;
-
+        
         public Magazine(int capacity = 30) 
         { 
            this._capacity = capacity;
@@ -23,8 +16,8 @@ namespace AK_47
             {
                 return null;
             }
-            Ammo ammo = ammos[0];
-            ammos.RemoveAt(0);
+            Ammo ammo = ammos.Last();// [ammos.Count -1];
+            ammos.Remove(ammo);//At(ammos.Count - 1);
             return ammo;
         }
         public void AddAmmo(Ammo ammo)
@@ -33,22 +26,13 @@ namespace AK_47
             {
                 throw new ArgumentException("Magazine is full");
             }
+            if(ammos.Contains(ammo))
+            {
+                throw new InvalidOperationException("This ammo is already loaded");
+            }
             ammos.Add(ammo);
         }
-        public void RemoveAmmo(int amount)
-        {
-            
-            if(ammos.Count == 0)
-            {
-                throw new ArgumentException("Magazine is empty");
-            }
-            if (amount <= 0)
-            {
-                throw new ArgumentException("Amount must be positive");
-            }
-            ammos.RemoveAt(0);
-            
-        }
+
         public int GetAmmoCount()
         {
             return ammos.Count;
