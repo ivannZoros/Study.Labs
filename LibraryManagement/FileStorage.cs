@@ -14,13 +14,14 @@ namespace LibraryManagement
         {
             _filePath = filePath;
         }
-        public string Load()
+
+        public bool Exists(string filePath)
         {
-            if(File.Exists(_filePath))
-            {
-                return File.ReadAllText(_filePath);
-            }
-            return 0;
+            return File.Exists(_filePath);
+        }
+        public string ReadAllText(string filePath)
+        {
+            return File.ReadAllText(filePath);
         }
 
         public void Save(string data)

@@ -4,8 +4,9 @@
     {
         static void Main(string[] args)
         {
-            string booksFilePath = "C:\\IT\\git\\Study.Labs\\LibraryManagement\\books.json";
-            var repository = new BookRepository(booksFilePath);
+            string booksFilePath = "D:\\C# Projects\\Study.Labs\\LibraryManagement\\books.json";
+            var fileStorage = new FileStorage(booksFilePath);
+            var repository = new BookRepository(booksFilePath, fileStorage);
 
             while (true) {
 

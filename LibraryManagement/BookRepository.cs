@@ -6,24 +6,26 @@ namespace LibraryManagement
 {
     public class BookRepository
     {
-
+        private readonly string _bookFilePath;
         private readonly IFileSystemClient _fileSystemClient;
         private List<Book> _books = new List<Book>();
         private bool _isBookLoaded = false;
+        
         public BookRepository(string filePath, IFileSystemClient storage) 
         {
+            _bookFilePath = filePath;
             _fileSystemClient = storage;
-            LoadBooks();
+            LoadBooks(_bookFilePath);
         }
  //LAZY<> тип для ленивой загрузки  
  //MOQ - библиотека для создания заглушен при тестировании .Сделать абстракцию от файловой системы
-        private void LoadBooks()
+        private void LoadBooks(string bookFilePath)
         {
             if(_isBookLoaded == false) { 
                 //if (File.Exists(_booksFilePath))
-                if (_fileSystemClient.Exists(_booksFilePath))
+                if (_fileSystemClient.Exists(_bookFilePath))
                 {
-                    var jsonString = File.ReadAllText(_booksFilePath);
+                    var jsonString = _fileSystemClient.ReadAllText(_bookFilePath);
                     _books = JsonSerializer.Deserialize<List<Book>>(jsonString);
                 }
                 else
@@ -33,9 +35,8 @@ namespace LibraryManagement
                 _isBookLoaded = true;
             }
         }
-        private void SaveBooks()
+        private void SaveBooks(string bookFilePath)
         {
-
                 var options = new JsonSerializerOptions
                 {
                     WriteIndented = true,
@@ -43,7 +44,7 @@ namespace LibraryManagement
                 };
 
                 var jsonString = JsonSerializer.Serialize(_books, options);
-                File.WriteAllText(_booksFilePath, jsonString);
+            _fileSystemClient.Save(jsonString);
  
         }
         public List<Book> SearchBooks(string searchId, SearchCriteria criteria)
@@ -77,7 +78,7 @@ namespace LibraryManagement
         public void AddBook(Book book)
         {
             _books.Add(book);
-            SaveBooks();
+            SaveBooks(_bookFilePath);
         }
 
         public List<Book> GetAllBooks()
@@ -89,7 +90,7 @@ namespace LibraryManagement
         public void RemoveBook(Book book)
         {
             _books.Remove(book);
-            SaveBooks();
+            SaveBooks(_bookFilePath);
         }
 
 

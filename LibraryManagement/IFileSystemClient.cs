@@ -10,5 +10,6 @@ namespace LibraryManagement
     {
         bool Exists(string filePath);
         string ReadAllText(string filePath);
+        void Save(string data);
     }
 }
