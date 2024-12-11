@@ -22,7 +22,6 @@ namespace LibraryManagement
         private void LoadBooks(string bookFilePath)
         {
             if(_isBookLoaded == false) { 
-                //if (File.Exists(_booksFilePath))
                 if (_fileSystemClient.Exists(_bookFilePath))
                 {
                     var jsonString = _fileSystemClient.ReadAllText(_bookFilePath);

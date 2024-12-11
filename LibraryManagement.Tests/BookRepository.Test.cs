@@ -1,52 +1,66 @@
+using Moq;
+using System.Text.Json;
+
 namespace LibraryManagement.Tests
 {
     public class BookRepositoryTests
     {
+        private readonly Mock<IFileSystemClient> _mockFileSystemClient;
         private readonly BookRepository _repository;
-        private string _testFilePath = "C:\\Users\\Елена Елисеева\\Downloads\\Study.Labs\\Study.Labs\\LibraryManagement.Tests\\booksTests.json";
+        private readonly string _testFilePath = "test.json";
         public BookRepositoryTests()
         {
-            _repository = new BookRepository(_testFilePath);
+            _mockFileSystemClient = new Mock<IFileSystemClient>();
+
+            _mockFileSystemClient
+                .Setup(x => x.Exists(It.IsAny<string>()))
+                .Returns(true);
+
+
+            _mockFileSystemClient
+               .Setup(x => x.ReadAllText(It.IsAny<string>()))
+               .Returns(JsonSerializer.Serialize(new List<Book>()));
+
+            _repository = new BookRepository(_testFilePath,_mockFileSystemClient.Object);
         }
 
-        private void ClearBookList()
-        {
-            var allBooks = _repository.GetAllBooks();
 
-            foreach (var book in allBooks.ToList()) 
-            {
-                _repository.RemoveBook(book);
-            }
-        }
 
         [Fact]
-        public void GetAllBooks_ShouldReturnListOfBooks()
+        public void GetAllBooks_WhenEmpty_ShouldReturnEmptyList()
         {
-            ClearBookList();
+            //Act +Arrange
             var books = _repository.GetAllBooks();
-            Assert.NotNull(books); 
+
+            //Assert
+            Assert.Empty(books); 
+
         }
         [Fact]
         public void AddBook_ShouldAddBookToList()
         {
-            ClearBookList();
+           //Arrange
             var book = new Book() 
             { Title = "Title", 
               Author = "Author",
               Isbn = "1",
               PublicationYear = 1
             };
-            var expectedCount = _repository.GetAllBooks().Count()+1;
 
+            //Act
             _repository.AddBook(book);
-            var actualBooks = _repository.GetAllBooks();
+            var allBooks = _repository.GetAllBooks();
 
-            Assert.Equal(expectedCount, actualBooks.Count());
+            //Assert
+            Assert.Single(allBooks);
+            Assert.Contains(book.Title, allBooks[0].Title);
+            _mockFileSystemClient.Verify(x => x.Save(It.IsAny<string>()), Times.Once);
+
         }
         [Fact]
         public void RemoveBook_ShouldRemoveBookFromList()
         {
-            ClearBookList();
+            //Arrange
             var book = new Book()
             {
                 Title = "Title",
@@ -54,21 +68,22 @@ namespace LibraryManagement.Tests
                 Isbn = "1",
                 PublicationYear = 1
             };
-            var expectedCount = _repository.GetAllBooks().Count;
-            //Проверить количество книг без добавления новых после удаления
 
+            //Act 
             _repository.AddBook(book);
             _repository.RemoveBook(book);
 
-            var actualBooks = _repository.GetAllBooks();
+            var allBooks = _repository.GetAllBooks();
 
-            Assert.Equal(expectedCount, actualBooks.Count);
+            //Assert
+            Assert.Empty(allBooks);
+
         }
 
         [Fact]
         public void SearchBooks_ByTitle_ShouldReturnCorrectBooks()
         {
-            ClearBookList();
+            //Arrange
             var book1 = new Book()
             {
                 Title = "Title1",
@@ -83,18 +98,20 @@ namespace LibraryManagement.Tests
                 Isbn = "2",
                 PublicationYear = 2
             };
-
+            //Act 
             _repository.AddBook(book1);
             _repository.AddBook(book2);
 
-
             var result = _repository.SearchBooks("Title1", SearchCriteria.Title);
+            //Assert
+            Assert.Single(result);
             Assert.Equal(book1.Title, result[0].Title);
+
         }
         [Fact]
         public void SearchBooks_ByAuthor_ShouldReturnCorrectBooks()
         {
-            ClearBookList();
+            //Arrange
             var book1 = new Book()
             {
                 Title = "Title1",
@@ -109,18 +126,20 @@ namespace LibraryManagement.Tests
                 Isbn = "2",
                 PublicationYear = 2
             };
-
+            //Act 
             _repository.AddBook(book1);
             _repository.AddBook(book2);
 
-
             var result = _repository.SearchBooks("Author1", SearchCriteria.Author);
+
+            //Assert
             Assert.Equal(book1.Author, result[0].Author);
+
         }
         [Fact]
         public void SearchBooks_ByIsbn_ShouldReturnCorrectBooks()
         {
-            ClearBookList();
+            //Arrange
             var book1 = new Book()
             {
                 Title = "Title1",
@@ -135,18 +154,21 @@ namespace LibraryManagement.Tests
                 Isbn = "2",
                 PublicationYear = 2
             };
-
+            //Act 
             _repository.AddBook(book1);
             _repository.AddBook(book2);
 
-
             var result = _repository.SearchBooks("1", SearchCriteria.Isbn);
+
+            //Assert
             Assert.Equal(book1.Isbn, result[0].Isbn);
+
+
         }
         [Fact]
         public void GetAllBooks_ShouldReturnAllAddedBooks()
         {
-            ClearBookList();
+            //Arrange
             var book1 = new Book()
             {
                 Title = "Title1",
@@ -161,14 +183,16 @@ namespace LibraryManagement.Tests
                 Isbn = "2",
                 PublicationYear = 2
             };
+
+            //Act 
             _repository.AddBook(book1);
             _repository.AddBook(book2);
 
             var books = _repository.GetAllBooks();
-            
 
-
+            //Assert
             Assert.Equal(2, books.Count);
+
         }
 
     }
