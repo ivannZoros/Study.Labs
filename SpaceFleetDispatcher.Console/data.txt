@@ -1,7 +1,7 @@
-LongRange	225	Amigo
+LongRange	250	Amigo
 MiddleRange	630	Fargo
-NearRange	1000	Chipmunk
-NearRange	2000	Dale
+NearRange	2000	Chipmunk
+NearRange	9500	Dale
 
 Earth	1	-0.4	0
 Venus	0.7	-0.1	700

@@ -5,7 +5,7 @@
         public LongRangeShip(string name, int capacity)
           : base(name, capacity) { }
 
-        public override double GetRange() => 4.0;
+        public override double GetRange() => 60.0;
     }
 
     public class MiddleRangeShip : ASpaceship
@@ -21,6 +21,6 @@
         public NearRangeShip(string name, int capacity)
           : base(name, capacity) { }
 
-        public override double GetRange() => 60.0;
+        public override double GetRange() => 4.0;
     }
 }
