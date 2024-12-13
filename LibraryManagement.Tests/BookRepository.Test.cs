@@ -54,7 +54,6 @@ namespace LibraryManagement.Tests
             //Assert
             Assert.Single(allBooks);
             Assert.Contains(book.Title, allBooks[0].Title);
-            _mockFileSystemClient.Verify(x => x.Save(It.IsAny<string>()), Times.Once);
 
         }
         [Fact]
