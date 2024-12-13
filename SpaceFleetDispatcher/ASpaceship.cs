@@ -1,14 +1,21 @@
 ﻿namespace SpaceFleetDispatcher
 {
-    abstract class ASpaceship
+    public abstract class ASpaceship
     {
-        public string Name { get; protected set; }
-        public int Capacity { get; protected set; }
-
+        public string Name { get; set; }
+        public int Capacity { get; set; }
         public ASpaceship(string name, int capacity)
         {
             Name = name;
             Capacity = capacity;
+        }
+
+        public bool СanReach(Planet planet)
+        {
+            bool canReach = planet.CargoDemand <= Capacity && planet.CalculateDistance() <= GetRange();
+
+            return canReach;
+
         }
 
         public static ASpaceship Parse(string input)
