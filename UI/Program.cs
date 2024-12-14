@@ -77,14 +77,14 @@
 
             for (int i = 0; i < books.Count; i++)
             {
-                Console.WriteLine($"{i + 1}. {books[i].Title} - {books[i].Author}");
+                Console.WriteLine($"{i + 1}. {books.ElementAt(i).Title} - {books.ElementAt(i).Author}");
             }
 
             var choice = int.Parse(Console.ReadLine());
 
             if(choice >= 0 &&  choice <= books.Count)
             {
-                repository.RemoveBook(books[choice - 1]);
+                repository.RemoveBook(books.ElementAt(choice - 1));
                 Console.WriteLine("Книга удалена");
             }
             else
@@ -135,7 +135,7 @@
                     break;
             }
         }
-        static void ShowSearchResults(List<Book> searchResults)
+        static void ShowSearchResults(IReadOnlyCollection<Book> searchResults)
         {
             if (searchResults.Count == 0)
             {

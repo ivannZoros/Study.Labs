@@ -6,13 +6,14 @@ namespace LibraryManagement.Tests
 {
     public class BookRepositoryTestsWithBooksTests
     {
+        //написать тест который В правильный момент вызывается метод Save через Verify
         private readonly Mock<IFileSystemClient> _mockFileSystemClient;
         private readonly BookRepository _repository;
         private readonly string _testFilePath = "test.json";
         public BookRepositoryTestsWithBooksTests()
         {
             _mockFileSystemClient = new Mock<IFileSystemClient>();
-            var listOfBooks = JsonSerializer.Serialize(
+            var serializeOfBooks = JsonSerializer.Serialize(
                 new List<Book>
             {
                 new Book
@@ -36,7 +37,7 @@ namespace LibraryManagement.Tests
 
             _mockFileSystemClient
                .Setup(x => x.ReadAllText(It.IsAny<string>()))
-               .Returns(listOfBooks);
+               .Returns(serializeOfBooks);
 
             _repository = new BookRepository(_testFilePath, _mockFileSystemClient.Object);
         }
@@ -65,6 +66,42 @@ namespace LibraryManagement.Tests
             // Arrange
             var newBook = new Book
             {
+                Title = "Title 1",
+                Author = "Author 1",
+                Isbn = "111",
+                PublicationYear = 2001
+            };
+
+            _repository.AddBook(newBook);
+
+            // Act
+            var searchResults = _repository.SearchBooks("Author 1", SearchCriteria.Author);
+            var bookToRemove = searchResults.First(); 
+            _repository.RemoveBook(bookToRemove);
+
+            var allBooks = _repository.GetAllBooks();
+
+            // Assert
+            Assert.DoesNotContain(bookToRemove,allBooks); 
+        }
+
+        [Fact]
+        public void SearchBooks_ByAuthor_ShouldReturnExistingBooks()
+        {
+            // Act
+            var result = _repository.SearchBooks("Author 1", SearchCriteria.Author);
+
+            // Assert
+            Assert.Single(result);
+            Assert.Equal("Author 1", result.First().Author);
+        }
+
+        [Fact]
+        public void AddBook_ShouldCallSaveMethodOnce()
+        {
+            // Arrange
+            var newBook = new Book
+            {
                 Title = "New Title",
                 Author = "New Author",
                 Isbn = "333",
@@ -73,21 +110,9 @@ namespace LibraryManagement.Tests
 
             // Act
             _repository.AddBook(newBook);
-            _repository.RemoveBook(newBook);
-            var allBooks = _repository.GetAllBooks();
 
             // Assert
-            Assert.Equal(2,allBooks.Count); 
-        }
-        [Fact]
-        public void SearchBooks_ByAuthor_ShouldReturnExistingBooks()
-        {
-            // Arrange + Act
-            var result = _repository.SearchBooks("Author 1", SearchCriteria.Author);
-
-            // Assert
-            Assert.Single(result);
-            Assert.Equal("Author 1", result.First().Author);
+            _mockFileSystemClient.Verify(x => x.Save(It.IsAny<string>()), Times.Once);
         }
     }
 }
