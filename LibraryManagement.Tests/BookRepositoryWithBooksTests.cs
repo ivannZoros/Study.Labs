@@ -46,8 +46,8 @@ namespace LibraryManagement.Tests
             // Arrange
             var newBook = new Book
             {
-                Title = "New Title",
-                Author = "New Author",
+                Title = "Title 3",
+                Author = "Author 3",
                 Isbn = "333",
                 PublicationYear = 2003
             };
@@ -101,8 +101,8 @@ namespace LibraryManagement.Tests
             // Arrange
             var newBook = new Book
             {
-                Title = "New Title",
-                Author = "New Author",
+                Title = "Title 3",
+                Author = "Author 3",
                 Isbn = "333",
                 PublicationYear = 2003
             };
