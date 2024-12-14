@@ -92,7 +92,7 @@ namespace LibraryManagement
             };
 
             var jsonString = JsonSerializer.Serialize(_books, options);
-            _fileSystemClient.Save(jsonString);
+            _fileSystemClient.Save(_bookFilePath,jsonString);
 
         }
     }

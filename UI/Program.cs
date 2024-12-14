@@ -5,7 +5,7 @@
         static void Main(string[] args)
         {
             string booksFilePath = "C:\\IT\\git\\Study.Labs\\LibraryManagement\\books.json";
-            var fileStorage = new FileStorage(booksFilePath);
+            var fileStorage = new FileStorage();
             var repository = new BookRepository(booksFilePath, fileStorage);
 
             while (true) {

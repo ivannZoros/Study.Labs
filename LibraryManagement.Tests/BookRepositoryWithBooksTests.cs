@@ -6,7 +6,6 @@ namespace LibraryManagement.Tests
 {
     public class BookRepositoryTestsWithBooksTests
     {
-        //написать тест который В правильный момент вызывается метод Save через Verify
         private readonly Mock<IFileSystemClient> _mockFileSystemClient;
         private readonly BookRepository _repository;
         private readonly string _testFilePath = "test.json";
@@ -112,7 +111,7 @@ namespace LibraryManagement.Tests
             _repository.AddBook(newBook);
 
             // Assert
-            _mockFileSystemClient.Verify(x => x.Save(It.IsAny<string>()), Times.Once);
+            _mockFileSystemClient.Verify(x => x.Save(It.IsAny<string>(), It.IsAny<string>()), Times.Once);
         }
     }
 }

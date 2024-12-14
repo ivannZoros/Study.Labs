@@ -8,25 +8,18 @@ namespace LibraryManagement
 {
     public class FileStorage : IFileSystemClient
     {
-        private readonly string _filePath;
-
-        public FileStorage(string filePath)
-        {
-            _filePath = filePath;
-        }
-        //Доделать.Убрать конструктор и сделать везде filePath
         public bool Exists(string filePath)
         {
-            return File.Exists(_filePath);
+            return File.Exists(filePath);
         }
         public string ReadAllText(string filePath)
         {
             return File.ReadAllText(filePath);
         }
 
-        public void Save(string data)
+        public void Save(string filePath, string data)
         {
-            File.WriteAllText(_filePath, data);
+            File.WriteAllText(filePath, data);
         }
     }
 }
