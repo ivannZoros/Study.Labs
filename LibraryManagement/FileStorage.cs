@@ -14,7 +14,7 @@ namespace LibraryManagement
         {
             _filePath = filePath;
         }
-
+        //Доделать.Убрать конструктор и сделать везде filePath
         public bool Exists(string filePath)
         {
             return File.Exists(_filePath);

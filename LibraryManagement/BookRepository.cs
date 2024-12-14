@@ -15,38 +15,12 @@ namespace LibraryManagement
         {
             _bookFilePath = filePath;
             _fileSystemClient = storage;
-            LoadBooks(_bookFilePath);
+            LoadBooks();
         }
- //LAZY<> тип для ленивой загрузки  
- //MOQ - библиотека для создания заглушен при тестировании .Сделать абстракцию от файловой системы
-        private void LoadBooks(string bookFilePath)
-        {
-            if(_isBookLoaded == false) { 
-                if (_fileSystemClient.Exists(_bookFilePath))
-                {
-                    var jsonString = _fileSystemClient.ReadAllText(_bookFilePath);
-                    _books = JsonSerializer.Deserialize<List<Book>>(jsonString);
-                }
-                else
-                {
-                    _books = new List<Book>();
-                }
-                _isBookLoaded = true;
-            }
-        }
-        private void SaveBooks(string bookFilePath)
-        {
-                var options = new JsonSerializerOptions
-                {
-                    WriteIndented = true,
-                    Converters = { new JsonStringEnumConverter() }
-                };
 
-                var jsonString = JsonSerializer.Serialize(_books, options);
-            _fileSystemClient.Save(jsonString);
- 
-        }
-        public List<Book> SearchBooks(string searchId, SearchCriteria criteria)
+ //MOQ - библиотека для создания заглушен при тестировании .Сделать абстракцию от файловой системы
+      
+        public IReadOnlyCollection<Book> SearchBooks(string searchId, SearchCriteria criteria)
         {
             List<Book> results = new List<Book>();
             switch (criteria)
@@ -74,24 +48,52 @@ namespace LibraryManagement
             }
             return results;
         }
+
         public void AddBook(Book book)
         {
             _books.Add(book);
-            SaveBooks(_bookFilePath);
+            SaveBooks();
         }
 
-        public List<Book> GetAllBooks()
+        public IReadOnlyCollection<Book> GetAllBooks()
         {
             return _books;
         }
 
-
         public void RemoveBook(Book book)
         {
             _books.Remove(book);
-            SaveBooks(_bookFilePath);
+            SaveBooks();
         }
 
+        private void LoadBooks()
+        {
+            if (_isBookLoaded == false)
+            {
+                if (_fileSystemClient.Exists(_bookFilePath))
+                {
+                    var jsonString = _fileSystemClient.ReadAllText(_bookFilePath);
+                    _books = JsonSerializer.Deserialize<List<Book>>(jsonString);
+                }
+                else
+                {
+                    _books = new List<Book>();
+                }
+                _isBookLoaded = true;
+            }
+        }
 
+        private void SaveBooks()
+        {
+            var options = new JsonSerializerOptions
+            {
+                WriteIndented = true,
+                Converters = { new JsonStringEnumConverter() }
+            };
+
+            var jsonString = JsonSerializer.Serialize(_books, options);
+            _fileSystemClient.Save(jsonString);
+
+        }
     }
 }

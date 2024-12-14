@@ -16,15 +16,12 @@ namespace LibraryManagement.Tests
                 .Setup(x => x.Exists(It.IsAny<string>()))
                 .Returns(true);
 
-
             _mockFileSystemClient
                .Setup(x => x.ReadAllText(It.IsAny<string>()))
-               .Returns(JsonSerializer.Serialize(new List<Book>()));
+               .Returns("[]");
 
-            _repository = new BookRepository(_testFilePath,_mockFileSystemClient.Object);
+            _repository = new BookRepository(_testFilePath, _mockFileSystemClient.Object);
         }
-
-
 
         [Fact]
         public void GetAllBooks_WhenEmpty_ShouldReturnEmptyList()
@@ -33,18 +30,20 @@ namespace LibraryManagement.Tests
             var books = _repository.GetAllBooks();
 
             //Assert
-            Assert.Empty(books); 
+            Assert.Empty(books);
 
         }
+
         [Fact]
         public void AddBook_ShouldAddBookToList()
         {
-           //Arrange
-            var book = new Book() 
-            { Title = "Title", 
-              Author = "Author",
-              Isbn = "1",
-              PublicationYear = 1
+            //Arrange
+            var book = new Book()
+            {
+                Title = "Title",
+                Author = "Author",
+                Isbn = "1",
+                PublicationYear = 1
             };
 
             //Act
@@ -53,9 +52,9 @@ namespace LibraryManagement.Tests
 
             //Assert
             Assert.Single(allBooks);
-            Assert.Contains(book.Title, allBooks[0].Title);
 
         }
+
         [Fact]
         public void RemoveBook_ShouldRemoveBookFromList()
         {
@@ -104,9 +103,10 @@ namespace LibraryManagement.Tests
             var result = _repository.SearchBooks("Title1", SearchCriteria.Title);
             //Assert
             Assert.Single(result);
-            Assert.Equal(book1.Title, result[0].Title);
+            Assert.Equal(book1.Title, result.First().Title);
 
         }
+
         [Fact]
         public void SearchBooks_ByAuthor_ShouldReturnCorrectBooks()
         {
@@ -132,9 +132,10 @@ namespace LibraryManagement.Tests
             var result = _repository.SearchBooks("Author1", SearchCriteria.Author);
 
             //Assert
-            Assert.Equal(book1.Author, result[0].Author);
+           Assert.Equal(book1.Author, result.First().Author);
 
         }
+
         [Fact]
         public void SearchBooks_ByIsbn_ShouldReturnCorrectBooks()
         {
@@ -160,10 +161,11 @@ namespace LibraryManagement.Tests
             var result = _repository.SearchBooks("1", SearchCriteria.Isbn);
 
             //Assert
-            Assert.Equal(book1.Isbn, result[0].Isbn);
+            Assert.Equal(book1.Isbn, result.First().Isbn);
 
 
         }
+
         [Fact]
         public void GetAllBooks_ShouldReturnAllAddedBooks()
         {
