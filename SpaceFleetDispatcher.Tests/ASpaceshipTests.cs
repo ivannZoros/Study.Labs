@@ -51,19 +51,20 @@ namespace SpaceFleetDispatcher.Tests
             Assert.Equal("Вместимость корабля неверная", exception.Message);
         }
 
-        [Fact]
-        public void Parse_ShouldReturnCorrectShip_WhenValidInput()
+        [Theory]
+        [InlineData("LongRange 100 LongShip", "LongShip", 100)]
+        [InlineData("MiddleRange 50 MiddleShip", "MiddleShip", 50)]
+        [InlineData("NearRange 30 NearShip", "NearShip", 30)]
+        public void Parse_ShouldReturnCorrectShip_WhenValidInput(
+            string input, 
+            string expectedName, 
+            int expectedCapacity)
         {
-            // Arrange
-            string validInput = "LongRange 100 TestShip";
 
-            // Act
-            var ship = ASpaceship.Parse(validInput);
+            var ship = ASpaceship.Parse(input);
 
-            // Assert
-            Assert.IsType<LongRangeShip>(ship);
-            Assert.Equal("TestShip", ship.Name);
-            Assert.Equal(100, ship.Capacity);
+            Assert.Equal(expectedName, ship.Name);
+            Assert.Equal(expectedCapacity, ship.Capacity);
         }
 
     }
