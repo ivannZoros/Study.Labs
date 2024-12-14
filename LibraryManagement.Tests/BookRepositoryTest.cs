@@ -22,8 +22,14 @@ namespace LibraryManagement.Tests
 
             _repository = new BookRepository(_testFilePath, _mockFileSystemClient.Object);
         }
-
-        [Fact]
+        // сделать             var book = new Book()
+        //    {
+         //       Title = "Title",
+          //      Author = "Author",
+        //        Isbn = "1",
+         //       PublicationYear = 1
+         //   }; static чтобы вызывать 1 раз для всех тестов
+    [Fact]
         public void GetAllBooks_WhenEmpty_ShouldReturnEmptyList()
         {
             //Act +Arrange
