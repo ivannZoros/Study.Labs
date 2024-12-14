@@ -5,6 +5,7 @@ namespace LibraryManagement.Tests
 {
     public class BookRepositoryTests
     {
+
         private readonly Mock<IFileSystemClient> _mockFileSystemClient;
         private readonly BookRepository _repository;
         private readonly string _testFilePath = "test.json";
@@ -22,17 +23,11 @@ namespace LibraryManagement.Tests
 
             _repository = new BookRepository(_testFilePath, _mockFileSystemClient.Object);
         }
-        // сделать             var book = new Book()
-        //    {
-         //       Title = "Title",
-          //      Author = "Author",
-        //        Isbn = "1",
-         //       PublicationYear = 1
-         //   }; static чтобы вызывать 1 раз для всех тестов
-    [Fact]
+
+        [Fact]
         public void GetAllBooks_WhenEmpty_ShouldReturnEmptyList()
         {
-            //Act +Arrange
+            //Act + Arrange
             var books = _repository.GetAllBooks();
 
             //Assert
@@ -43,17 +38,8 @@ namespace LibraryManagement.Tests
         [Fact]
         public void AddBook_ShouldAddBookToList()
         {
-            //Arrange
-            var book = new Book()
-            {
-                Title = "Title",
-                Author = "Author",
-                Isbn = "1",
-                PublicationYear = 1
-            };
-
-            //Act
-            _repository.AddBook(book);
+            //Arrange + Act
+            _repository.AddBook(TestBook1);
             var allBooks = _repository.GetAllBooks();
 
             //Assert
@@ -64,18 +50,11 @@ namespace LibraryManagement.Tests
         [Fact]
         public void RemoveBook_ShouldRemoveBookFromList()
         {
-            //Arrange
-            var book = new Book()
-            {
-                Title = "Title",
-                Author = "Author",
-                Isbn = "1",
-                PublicationYear = 1
-            };
 
-            //Act 
-            _repository.AddBook(book);
-            _repository.RemoveBook(book);
+
+            //Arrange + Act
+            _repository.AddBook(TestBook1);
+            _repository.RemoveBook(TestBook1);
 
             var allBooks = _repository.GetAllBooks();
 
@@ -87,87 +66,42 @@ namespace LibraryManagement.Tests
         [Fact]
         public void SearchBooks_ByTitle_ShouldReturnCorrectBooks()
         {
-            //Arrange
-            var book1 = new Book()
-            {
-                Title = "Title1",
-                Author = "Author1",
-                Isbn = "1",
-                PublicationYear = 1
-            };
-            var book2 = new Book()
-            {
-                Title = "Title2",
-                Author = "Author2",
-                Isbn = "2",
-                PublicationYear = 2
-            };
-            //Act 
-            _repository.AddBook(book1);
-            _repository.AddBook(book2);
+            //Arrange + Act 
+            _repository.AddBook(TestBook1);
+            _repository.AddBook(TestBook2);
 
             var result = _repository.SearchBooks("Title1", SearchCriteria.Title);
             //Assert
             Assert.Single(result);
-            Assert.Equal(book1.Title, result.First().Title);
+            Assert.Equal(TestBook1.Title, result.First().Title);
 
         }
 
         [Fact]
         public void SearchBooks_ByAuthor_ShouldReturnCorrectBooks()
         {
-            //Arrange
-            var book1 = new Book()
-            {
-                Title = "Title1",
-                Author = "Author1",
-                Isbn = "1",
-                PublicationYear = 1
-            };
-            var book2 = new Book()
-            {
-                Title = "Title2",
-                Author = "Author2",
-                Isbn = "2",
-                PublicationYear = 2
-            };
-            //Act 
-            _repository.AddBook(book1);
-            _repository.AddBook(book2);
+            //Arrange + Act 
+            _repository.AddBook(TestBook1);
+            _repository.AddBook(TestBook2);
 
             var result = _repository.SearchBooks("Author1", SearchCriteria.Author);
 
             //Assert
-           Assert.Equal(book1.Author, result.First().Author);
+           Assert.Equal(TestBook1.Author, result.First().Author);
 
         }
 
         [Fact]
         public void SearchBooks_ByIsbn_ShouldReturnCorrectBooks()
         {
-            //Arrange
-            var book1 = new Book()
-            {
-                Title = "Title1",
-                Author = "Author1",
-                Isbn = "1",
-                PublicationYear = 1
-            };
-            var book2 = new Book()
-            {
-                Title = "Title2",
-                Author = "Author2",
-                Isbn = "2",
-                PublicationYear = 2
-            };
-            //Act 
-            _repository.AddBook(book1);
-            _repository.AddBook(book2);
+            //Arrange + Act 
+            _repository.AddBook(TestBook1);
+            _repository.AddBook(TestBook2);
 
             var result = _repository.SearchBooks("1", SearchCriteria.Isbn);
 
             //Assert
-            Assert.Equal(book1.Isbn, result.First().Isbn);
+            Assert.Equal(TestBook1.Isbn, result.First().Isbn);
 
 
         }
@@ -175,25 +109,10 @@ namespace LibraryManagement.Tests
         [Fact]
         public void GetAllBooks_ShouldReturnAllAddedBooks()
         {
-            //Arrange
-            var book1 = new Book()
-            {
-                Title = "Title1",
-                Author = "Author1",
-                Isbn = "1",
-                PublicationYear = 1
-            };
-            var book2 = new Book()
-            {
-                Title = "Title2",
-                Author = "Author2",
-                Isbn = "2",
-                PublicationYear = 2
-            };
 
-            //Act 
-            _repository.AddBook(book1);
-            _repository.AddBook(book2);
+            //Arrange + Act 
+            _repository.AddBook(TestBook1);
+            _repository.AddBook(TestBook2);
 
             var books = _repository.GetAllBooks();
 
@@ -201,6 +120,21 @@ namespace LibraryManagement.Tests
             Assert.Equal(2, books.Count);
 
         }
+
+        private static Book TestBook1 = new Book
+        {
+            Title = "Title1",
+            Author = "Author1",
+            Isbn = "1",
+            PublicationYear = 1
+        };
+        private static Book TestBook2 = new Book
+        {
+            Title = "Title2",
+            Author = "Author2",
+            Isbn = "2",
+            PublicationYear = 2
+        };
 
     }
 }
