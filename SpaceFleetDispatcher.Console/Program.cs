@@ -14,6 +14,7 @@ namespace SpaceFleetDispatcher
             var planets = new List<Planet>();
             bool isShipsSection = true;
             var lines = File.ReadAllLines(fileName);
+
             foreach (var line in lines)
             {
                 if (string.IsNullOrWhiteSpace(line))

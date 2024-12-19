@@ -14,16 +14,18 @@
         {
             var assignments = new Dictionary<ASpaceship, List<Planet>>();
             var remainingPlanets = new List<Planet>(_planets);
+
             foreach (var ship in _ships)
             {
                 assignments[ship] = new List<Planet>();
+
                 foreach (var planet in remainingPlanets.ToList())
                 {
                     if (ship.СanReach(planet))
                     {
                         assignments[ship].Add(planet);
                         remainingPlanets.Remove(planet);
-                        break;
+
                     }
                 }
             }
