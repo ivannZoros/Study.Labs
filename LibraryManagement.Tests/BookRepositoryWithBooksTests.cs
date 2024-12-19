@@ -12,8 +12,9 @@ namespace LibraryManagement.Tests
         public BookRepositoryTestsWithBooksTests()
         {
             _mockFileSystemClient = new Mock<IFileSystemClient>();
+
             var serializeOfBooks = JsonSerializer.Serialize(
-                new List<Book>
+            new List<Book>
             {
                 new Book
                 {
@@ -59,6 +60,7 @@ namespace LibraryManagement.Tests
             // Assert
             Assert.Equal(3, allBooks.Count); 
         }
+
         [Fact]
         public void RemoveBook_ShouldRemoveBookFromExistingList()
         {

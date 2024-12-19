@@ -17,8 +17,6 @@ namespace LibraryManagement
             _fileSystemClient = storage;
             LoadBooks();
         }
-
- //MOQ - библиотека для создания заглушен при тестировании .Сделать абстракцию от файловой системы
       
         public IReadOnlyCollection<Book> SearchBooks(string searchId, SearchCriteria criteria)
         {

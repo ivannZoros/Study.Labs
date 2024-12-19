@@ -32,7 +32,6 @@ namespace LibraryManagement.Tests
 
             //Assert
             Assert.Empty(books);
-
         }
 
         [Fact]
@@ -44,14 +43,11 @@ namespace LibraryManagement.Tests
 
             //Assert
             Assert.Single(allBooks);
-
         }
 
         [Fact]
         public void RemoveBook_ShouldRemoveBookFromList()
         {
-
-
             //Arrange + Act
             _repository.AddBook(TestBook1);
             _repository.RemoveBook(TestBook1);
@@ -60,7 +56,6 @@ namespace LibraryManagement.Tests
 
             //Assert
             Assert.Empty(allBooks);
-
         }
 
         [Fact]
@@ -74,7 +69,6 @@ namespace LibraryManagement.Tests
             //Assert
             Assert.Single(result);
             Assert.Equal(TestBook1.Title, result.First().Title);
-
         }
 
         [Fact]
@@ -88,7 +82,6 @@ namespace LibraryManagement.Tests
 
             //Assert
            Assert.Equal(TestBook1.Author, result.First().Author);
-
         }
 
         [Fact]
@@ -102,14 +95,11 @@ namespace LibraryManagement.Tests
 
             //Assert
             Assert.Equal(TestBook1.Isbn, result.First().Isbn);
-
-
         }
 
         [Fact]
         public void GetAllBooks_ShouldReturnAllAddedBooks()
         {
-
             //Arrange + Act 
             _repository.AddBook(TestBook1);
             _repository.AddBook(TestBook2);
@@ -118,7 +108,6 @@ namespace LibraryManagement.Tests
 
             //Assert
             Assert.Equal(2, books.Count);
-
         }
 
         private static Book TestBook1 = new Book
