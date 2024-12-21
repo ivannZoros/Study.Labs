@@ -121,7 +121,7 @@
                 case "1":
                     Console.WriteLine("Введите название книги:");
                     searchId = Console.ReadLine();
-                    ShowSearchResults(repository.SearchBooks(searchId,SearchCriteria.Title));
+                    ShowSearchResults(repository.SearchBooks(searchId,SearchCriteria.Title | SearchCriteria.Author));
                     break;
                 case "2":
                     Console.WriteLine("Введите автора книги:");

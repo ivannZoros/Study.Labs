@@ -20,7 +20,9 @@ namespace LibraryManagement
       
         public IReadOnlyCollection<Book> SearchBooks(string searchId, SearchCriteria criteria)
         {
+            criteria.HasFlag(SearchCriteria.Title);
             List<Book> results = new List<Book>();
+            if(criteria.HasFlag(SearchCriteria.Title)) 
             switch (criteria)
             {
                 case SearchCriteria.Title:
